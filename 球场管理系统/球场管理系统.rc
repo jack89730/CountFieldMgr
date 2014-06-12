@@ -1,0 +1,547 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\My.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""l.CHS\\afxres.rc""      // 标准组件\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\球场管理系统.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 球场管理系统"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "球场管理系统，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2014",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_DLG_MAIN DIALOGEX 0, 0, 397, 306
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "球场管理系统"
+FONT 10, "宋体", 400, 0, 0x86
+BEGIN
+    CONTROL         "",ID_TAB_MAIN,"SysTabControl32",TCS_BUTTONS,0,21,397,284,WS_EX_RIGHT
+    LTEXT           "正在加载北京时间",IDC_TIME,180,7,113,12
+    LTEXT           "星期",IDC_WEEK,311,6,35,12
+    LTEXT           "欢迎使用球场管理系统",IDC_HELLO,1,7,133,8
+END
+
+IDD_DLG_FIELD DIALOGEX 0, 0, 467, 265
+STYLE DS_SETFONT | DS_3DLOOK | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+EXSTYLE WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_FIELD,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_AUTOARRANGE | LVS_OWNERDRAWFIXED | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_TABSTOP,7,71,454,142
+    PUSHBUTTON      "添加",IDC_BTN_ADD,67,232,50,16
+    PUSHBUTTON      "删除",IDC_BTN_DEL,149,232,50,16
+    GROUPBOX        "场地管理",IDC_STATIC,7,221,454,33
+    CTEXT           "9:00\n-\n9:30",IDC_STATIC,46,41,22,25
+    CONTROL         "",IDC_DATETIMEPICKER1,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,226,15,100,15
+    PUSHBUTTON      "下一天",IDC_BUTTON1,371,15,50,14
+    PUSHBUTTON      "前一天",IDC_BUTTON2,126,15,50,14
+    CTEXT           "9:30\n-\n10:00",IDC_STATIC,70,41,22,25
+    CTEXT           "10:00\n-\n10:30",IDC_STATIC,94,41,22,25
+    CTEXT           "10:30\n-\n11:00",IDC_STATIC,118,41,22,25
+    CTEXT           "11:00\n-\n11:30",IDC_STATIC,142,41,22,25
+    CTEXT           "11:30\n-\n12:00",IDC_STATIC,166,41,22,25
+    CTEXT           "12:00\n-\n12:30",IDC_STATIC,190,41,22,25
+    CTEXT           "12:30\n-\n13:00",IDC_STATIC,214,41,22,25
+    CTEXT           "13:30\n-\n14:00",IDC_STATIC,238,41,22,25
+    CTEXT           "14:00\n-\n14:30",IDC_STATIC,262,41,22,25
+    CTEXT           "14:30\n-\n15:00",IDC_STATIC,286,41,22,25
+    CTEXT           "15:00\n-\n15:30",IDC_STATIC,310,41,22,25
+    CTEXT           "15:30\n-\n16:00",IDC_STATIC,334,41,22,25
+    CTEXT           "16:00\n-\n16:30",IDC_STATIC,358,41,22,25
+    CTEXT           "16:30\n-\n17:00",IDC_STATIC,382,41,22,25
+    CTEXT           "17:00\n-\n17:30",IDC_STATIC,406,41,22,25
+    CTEXT           "17:30\n-\n18:00",IDC_STATIC,430,41,22,25
+    CTEXT           "绿色：空闲  红色：占用",IDC_STATIC_BUSY,18,18,89,9
+    CTEXT           "拖动可交换",IDC_STATIC,391,233,52,11
+END
+
+IDD_DLG_FOOD DIALOGEX 0, 0, 421, 198
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,15,173,149
+    PUSHBUTTON      "添加",IDC_BTN_ADD,13,184,50,14
+    PUSHBUTTON      "删除",IDC_BTN_DEL,69,184,50,14
+    PUSHBUTTON      "修改",IDC_BTN_MODIFY,125,184,50,14
+    CONTROL         "",IDC_LIST2,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,276,15,132,149
+    PUSHBUTTON      ">>",IDC_BUTTON1,203,80,50,14
+    PUSHBUTTON      "<<",IDC_BUTTON4,203,124,50,14
+    PUSHBUTTON      "结算",IDC_BUTTON2,290,183,50,14
+    EDITTEXT        IDC_EDIT1,204,43,48,16,ES_AUTOHSCROLL
+    LTEXT           "数量",IDC_STATIC,215,26,21,10
+    PUSHBUTTON      "清空",IDC_BUTTON3,355,183,50,14
+END
+
+IDD_DLG_VIP DIALOGEX 0, 0, 425, 203
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_VIP,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,3,418,169
+    PUSHBUTTON      "添加",IDC_BTN_ADD,57,182,50,14
+    PUSHBUTTON      "删除",IDC_BTN_DEL,143,182,50,14
+    PUSHBUTTON      "修改",IDC_BTN_MODIFY,230,182,50,14
+    PUSHBUTTON      "充值",IDC_BTN_CHARGE,318,182,50,14
+    GROUPBOX        "静态",IDC_STATIC,12,173,409,29
+END
+
+IDD_DLG_ADD_VIP DIALOGEX 0, 0, 226, 185
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "添加会员"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,39,164,50,14
+    PUSHBUTTON      "取消",IDCANCEL,117,164,50,14
+    EDITTEXT        IDC_EDIT_ID,91,24,104,16,ES_AUTOHSCROLL
+    LTEXT           "ID",IDC_STATIC,28,25,40,13
+    EDITTEXT        IDC_EDIT2,90,70,104,16,ES_AUTOHSCROLL
+    LTEXT           "性别",IDC_STATIC,27,72,40,13
+    EDITTEXT        IDC_EDIT3,88,96,104,16,ES_AUTOHSCROLL
+    LTEXT           "电话",IDC_STATIC,25,97,40,13
+    EDITTEXT        IDC_EDIT4,88,120,104,16,ES_AUTOHSCROLL
+    LTEXT           "余额",IDC_STATIC,25,121,40,13
+    EDITTEXT        IDC_EDIT1,87,46,104,16,ES_AUTOHSCROLL
+    LTEXT           "姓名",IDC_STATIC,24,47,40,13
+END
+
+IDD_DLG_MODIFY_VIP DIALOGEX 0, 0, 189, 140
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "修改会员信息"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,37,108,50,14
+    PUSHBUTTON      "取消",IDCANCEL,110,108,50,14
+    EDITTEXT        IDC_EDIT1,72,11,104,16,ES_AUTOHSCROLL
+    LTEXT           "姓名：",IDC_STATIC,27,13,27,13,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT2,72,33,104,16,ES_AUTOHSCROLL
+    LTEXT           "性别：",IDC_STATIC,25,34,27,13,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT3,72,52,104,16,ES_AUTOHSCROLL
+    LTEXT           "电话：",IDC_STATIC,26,55,27,13,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT4,72,73,104,16,ES_AUTOHSCROLL
+    LTEXT           "余额：",IDC_STATIC,26,74,27,13,0,WS_EX_RIGHT
+END
+
+IDD_DLG_ADD_FOOD DIALOGEX 0, 0, 316, 185
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "添加商品"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,73,164,50,14
+    PUSHBUTTON      "取消",IDCANCEL,171,164,50,14
+    LTEXT           "商品名",IDC_STATIC,60,65,56,20
+    EDITTEXT        IDC_EDIT1,129,63,99,19,ES_AUTOHSCROLL
+    LTEXT           "价格",IDC_STATIC,58,97,56,20
+    EDITTEXT        IDC_EDIT2,127,95,99,19,ES_AUTOHSCROLL
+    LTEXT           "ID",IDC_STATIC,56,22,56,20
+    EDITTEXT        IDC_EDIT3,125,19,99,19,ES_AUTOHSCROLL
+END
+
+IDD_DLG_MODIFY_FOOD DIALOGEX 0, 0, 191, 109
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "修改商品"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,26,82,50,14
+    PUSHBUTTON      "取消",IDCANCEL,118,82,50,14
+    LTEXT           "商品名",IDC_STATIC,28,12,38,14,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT1,72,9,90,14,ES_AUTOHSCROLL
+    LTEXT           "价格",IDC_STATIC,31,44,33,11,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT2,72,42,90,14,ES_AUTOHSCROLL
+END
+
+IDD_DLG_CHARGE DIALOGEX 0, 0, 283, 215
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "充值"
+FONT 10, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确认充值",IDOK,113,170,46,18
+    PUSHBUTTON      "取消",IDCANCEL,193,170,46,18
+    RTEXT           "充值金额",IDC_STATIC,48,113,35,15
+    RTEXT           "当前余额",IDC_STATIC,49,92,35,15
+    EDITTEXT        IDC_EDIT1,143,89,68,14,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "充后金额",IDC_STATIC,49,134,35,15
+    EDITTEXT        IDC_EDIT2,143,111,68,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT3,143,132,68,14,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "充值ID",IDC_STATIC,17,18,35,15
+    EDITTEXT        IDC_EDIT4,67,14,68,16,ES_AUTOHSCROLL
+    RTEXT           "姓名",IDC_STATIC,41,69,35,15
+    EDITTEXT        IDC_EDIT5,143,65,68,14,ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "信息核对",IDC_STATIC,24,52,232,105
+    RTEXT           "金额",IDC_STATIC,137,17,35,15
+    EDITTEXT        IDC_EDIT6,188,13,68,15,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "核对信息",IDOK2,29,169,46,18
+END
+
+IDD_DLG_BUYFOOD DIALOGEX 0, 0, 443, 218
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "购买"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,290,197,50,14
+    PUSHBUTTON      "取消",IDCANCEL,197,197,50,14
+    CONTROL         "",IDC_LIST1,"SysListView32",LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,171,178
+    CONTROL         "",IDC_LIST2,"SysListView32",LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,276,7,160,177
+    LTEXT           "数量",IDC_STATIC,212,25,17,8
+    EDITTEXT        IDC_EDIT1,203,50,40,14,ES_AUTOHSCROLL
+    PUSHBUTTON      ">>",IDC_BTN_BUY,199,90,50,14
+    PUSHBUTTON      "<<",IDC_BTN_CANCELBUY,199,132,50,14
+END
+
+IDD_DLG_BOOK DIALOGEX 0, 0, 228, 168
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "预订"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,56,125,50,14
+    PUSHBUTTON      "取消",IDCANCEL,137,125,50,14
+    RTEXT           "会员号:",IDC_STATIC,64,82,28,8
+    EDITTEXT        IDC_EDIT2,120,81,65,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FIELD,120,14,65,14,ES_AUTOHSCROLL
+    RTEXT           "场地:",IDC_STATIC,64,16,28,10
+    COMBOBOX        IDC_COMBO_START,56,43,48,71,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_STOP,129,43,48,116,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "-",IDC_STATIC,114,45,9,8
+END
+
+IDD_DLG_CANCEL_BOOK DIALOGEX 0, 0, 316, 185
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,205,164,50,14
+    PUSHBUTTON      "取消",IDCANCEL,259,164,50,14
+END
+
+IDD_DLG_BOOKINFO DIALOGEX 0, 0, 222, 151
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,52,124,50,14
+    PUSHBUTTON      "取消",IDCANCEL,111,125,50,14
+    LTEXT           "会员号",IDC_STATIC,26,17,25,8
+    EDITTEXT        IDC_EDIT_ID,89,14,102,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT_NAME,89,36,102,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "姓名",IDC_STATIC,29,41,40,13
+    EDITTEXT        IDC_EDIT_PHONE,89,80,102,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "性别",IDC_STATIC,29,65,40,13
+    LTEXT           "电话",IDC_STATIC,29,86,40,13
+    EDITTEXT        IDC_EDIT_SEX,89,58,102,14,ES_AUTOHSCROLL | ES_READONLY
+END
+
+IDD_DLG_ADDFIELD DIALOGEX 0, 0, 165, 104
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "添加场地"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,26,70,50,14
+    PUSHBUTTON      "取消",IDCANCEL,88,70,50,14
+    EDITTEXT        IDC_EDIT_NAME,76,37,68,14,ES_AUTOHSCROLL
+    LTEXT           "场地名称：",IDC_STATIC,28,41,41,8
+    LTEXT           "名称不可修改哦！",IDC_STATIC,30,16,103,8
+END
+
+IDD_DLG_FOOD_MONEY DIALOGEX 0, 0, 151, 106
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "付款"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,25,78,50,14
+    PUSHBUTTON      "取消",IDCANCEL,79,78,50,14
+    LTEXT           "金额：",IDC_STATIC,26,17,25,8
+    EDITTEXT        IDC_EDIT1,59,15,69,14,ES_AUTOHSCROLL
+    LTEXT           "付款：",IDC_STATIC,25,43,25,8
+    EDITTEXT        IDC_EDIT2,59,41,69,14,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "球场管理系统.exe"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "OriginalFilename", "球场管理系统.exe"
+            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_DLG_MAIN, DIALOG
+    BEGIN
+        RIGHTMARGIN, 393
+        BOTTOMMARGIN, 282
+    END
+
+    IDD_DLG_FIELD, DIALOG
+    BEGIN
+        RIGHTMARGIN, 461
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 263
+    END
+
+    IDD_DLG_FOOD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+    END
+
+    IDD_DLG_VIP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 410
+        TOPMARGIN, 3
+    END
+
+    IDD_DLG_ADD_VIP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 219
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 178
+    END
+
+    IDD_DLG_MODIFY_VIP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 182
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 133
+    END
+
+    IDD_DLG_ADD_FOOD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 178
+    END
+
+    IDD_DLG_CHARGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 276
+        BOTTOMMARGIN, 208
+    END
+
+    IDD_DLG_BUYFOOD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 436
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 211
+    END
+
+    IDD_DLG_BOOK, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 221
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 161
+    END
+
+    IDD_DLG_CANCEL_BOOK, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 178
+    END
+
+    IDD_DLG_ADDFIELD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 158
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 97
+    END
+
+    IDD_DLG_FOOD_MONEY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 144
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 99
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU_IDLE MENU 
+BEGIN
+    POPUP "右键场地"
+    BEGIN
+        MENUITEM "预定",                          ID_BOOK
+    END
+END
+
+IDR_MENU_BUSY MENU 
+BEGIN
+    POPUP "右键忙场地"
+    BEGIN
+        MENUITEM "取消预订",                        ID_CANCEL_BOOK
+        MENUITEM "预订详情",                        ID_BOOK_INFO
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 球场管理系统(&A)..."
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\My.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "l.CHS\afxres.rc"      // 标准组件
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

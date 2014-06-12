@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="gb2312" standalone="yes" ?>
+<food_list>
+    <food id="2">
+        <name>啤酒</name>
+        <price>5</price>
+    </food>
+    <food id="3">
+        <name>蛋炒饭</name>
+        <price>10</price>
+    </food>
+</food_list>

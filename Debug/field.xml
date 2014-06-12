@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="gb2312" standalone="yes" ?>
+<field_list>
+    <field id="102">
+        <date date="20140613">
+            <time index="0" booker="">0</time>
+            <time index="1" booker="">0</time>
+            <time index="2" booker="">0</time>
+            <time index="3" booker="">0</time>
+            <time index="4" booker="">0</time>
+            <time index="5" booker="1">1</time>
+            <time index="6" booker="">0</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="">0</time>
+            <time index="9" booker="">0</time>
+            <time index="10" booker="">0</time>
+            <time index="11" booker="1">1</time>
+            <time index="12" booker="">0</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+        <date date="20140612">
+            <time index="0" booker="1">1</time>
+            <time index="1" booker="1">1</time>
+            <time index="2" booker="1">1</time>
+            <time index="3" booker="1">1</time>
+            <time index="4" booker="1">1</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="">0</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="1">1</time>
+            <time index="9" booker="">0</time>
+            <time index="10" booker="1">1</time>
+            <time index="11" booker="1">1</time>
+            <time index="12" booker="">0</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+        <date date="20140615">
+            <time index="0" booker="">0</time>
+            <time index="1" booker="">0</time>
+            <time index="2" booker="">0</time>
+            <time index="3" booker="">0</time>
+            <time index="4" booker="">0</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="">0</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="">0</time>
+            <time index="9" booker="">0</time>
+            <time index="10" booker="">0</time>
+            <time index="11" booker="">0</time>
+            <time index="12" booker="">0</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+        <date date="20140614">
+            <time index="0" booker="">0</time>
+            <time index="1" booker="">0</time>
+            <time index="2" booker="">0</time>
+            <time index="3" booker="">0</time>
+            <time index="4" booker="">0</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="1">1</time>
+            <time index="7" booker="1">1</time>
+            <time index="8" booker="1">1</time>
+            <time index="9" booker="1">1</time>
+            <time index="10" booker="1">1</time>
+            <time index="11" booker="">0</time>
+            <time index="12" booker="">0</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+    </field>
+    <field id="123">
+        <date date="20140612">
+            <time index="0" booker="1">1</time>
+            <time index="1" booker="1">1</time>
+            <time index="2" booker="1">1</time>
+            <time index="3" booker="1">1</time>
+            <time index="4" booker="1">1</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="1">1</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="">0</time>
+            <time index="9" booker="1">1</time>
+            <time index="10" booker="1">1</time>
+            <time index="11" booker="1">1</time>
+            <time index="12" booker="1">1</time>
+            <time index="13" booker="1">1</time>
+            <time index="14" booker="1">1</time>
+            <time index="15" booker="1">1</time>
+            <time index="16" booker="1">1</time>
+        </date>
+        <date date="20140614">
+            <time index="0" booker="">0</time>
+            <time index="1" booker="">0</time>
+            <time index="2" booker="">0</time>
+            <time index="3" booker="">0</time>
+            <time index="4" booker="">0</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="">0</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="">0</time>
+            <time index="9" booker="">0</time>
+            <time index="10" booker="">0</time>
+            <time index="11" booker="1">1</time>
+            <time index="12" booker="1">1</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+    </field>
+    <field id="303">
+        <date date="20140612">
+            <time index="0" booker="">0</time>
+            <time index="1" booker="">0</time>
+            <time index="2" booker="">0</time>
+            <time index="3" booker="">0</time>
+            <time index="4" booker="">0</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="">0</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="">0</time>
+            <time index="9" booker="">0</time>
+            <time index="10" booker="">0</time>
+            <time index="11" booker="">0</time>
+            <time index="12" booker="">0</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+    </field>
+    <field id="101">
+        <date date="20140612">
+            <time index="0" booker="">0</time>
+            <time index="1" booker="">0</time>
+            <time index="2" booker="">0</time>
+            <time index="3" booker="">0</time>
+            <time index="4" booker="">0</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="">0</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="">0</time>
+            <time index="9" booker="">0</time>
+            <time index="10" booker="">0</time>
+            <time index="11" booker="">0</time>
+            <time index="12" booker="">0</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+    </field>
+    <field id="201">
+        <date date="20140612">
+            <time index="0" booker="">0</time>
+            <time index="1" booker="">0</time>
+            <time index="2" booker="">0</time>
+            <time index="3" booker="">0</time>
+            <time index="4" booker="">0</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="">0</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="">0</time>
+            <time index="9" booker="">0</time>
+            <time index="10" booker="">0</time>
+            <time index="11" booker="">0</time>
+            <time index="12" booker="">0</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+    </field>
+    <field id="312">
+        <date date="20140612">
+            <time index="0" booker="">0</time>
+            <time index="1" booker="">0</time>
+            <time index="2" booker="">0</time>
+            <time index="3" booker="">0</time>
+            <time index="4" booker="">0</time>
+            <time index="5" booker="">0</time>
+            <time index="6" booker="">0</time>
+            <time index="7" booker="">0</time>
+            <time index="8" booker="">0</time>
+            <time index="9" booker="">0</time>
+            <time index="10" booker="">0</time>
+            <time index="11" booker="">0</time>
+            <time index="12" booker="">0</time>
+            <time index="13" booker="">0</time>
+            <time index="14" booker="">0</time>
+            <time index="15" booker="">0</time>
+            <time index="16" booker="">0</time>
+        </date>
+    </field>
+</field_list>
