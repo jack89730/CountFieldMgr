@@ -214,10 +214,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DlgBuyFood.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\DlgCancelBook.cpp"
 				>
 			</File>
@@ -250,6 +246,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\fielddata.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\fooddata.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainDlg.cpp"
 				>
 			</File>
@@ -276,6 +280,10 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\vipdata.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\xmlbase.cpp"
@@ -316,10 +324,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DlgBuyFood.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DlgCancelBook.h"
 				>
 			</File>
@@ -349,6 +353,14 @@
 			</File>
 			<File
 				RelativePath=".\DlgVip.h"
+				>
+			</File>
+			<File
+				RelativePath=".\fielddata.h"
+				>
+			</File>
+			<File
+				RelativePath=".\fooddata.h"
 				>
 			</File>
 			<File
@@ -393,6 +405,10 @@
 			</File>
 			<File
 				RelativePath=".\tinyxmlparser.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vipdata.h"
 				>
 			</File>
 			<File

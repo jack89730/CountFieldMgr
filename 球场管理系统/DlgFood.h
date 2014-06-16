@@ -3,6 +3,7 @@
 #include "resource.h"
 #include "afxcmn.h"
 #include "public.h"
+#include "fooddata.h"
 // CDlgFood ¶Ô»°¿ò
 
 class CDlgFood : public CDialog
@@ -32,7 +33,7 @@ public:
 	CArray<FoodInfo> m_ayFood;
 	FoodInfo* GetFoodInfo(CString strID);
 	int ChangeFoodInfo(FoodInfo& info);
-	CString m_strXML;
+	//CString m_strXML;
 	int m_nMaxID;
 
 	int m_nCount;
@@ -41,4 +42,7 @@ public:
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton4();
+
+	CFoodData* m_pFoodData;
 };
+

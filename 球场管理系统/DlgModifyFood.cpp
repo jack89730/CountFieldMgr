@@ -35,9 +35,6 @@ BEGIN_MESSAGE_MAP(CDlgModifyFood, CDialog)
 	ON_BN_CLICKED(IDOK, &CDlgModifyFood::OnBnClickedOk)
 END_MESSAGE_MAP()
 
-
-// CDlgModifyFood 消息处理程序
-
 // CDlgModifyFood 消息处理程序
 BOOL CDlgModifyFood::OnInitDialog()
 {
@@ -71,5 +68,6 @@ void CDlgModifyFood::OnBnClickedOk()
 	CWnd* p = AfxGetApp()->GetMainWnd();
 	CMainDlg* pMainWnd = (CMainDlg*)p;
 	pMainWnd->m_pageFood.ChangeFoodInfo(info);
+	pMainWnd->m_pageFood.ShowItemFood();
 	CDialog::OnOK();
 }

@@ -3,6 +3,17 @@
 #include <vector>
 using namespace std;
 
+#define DATA_FROM_TYPE 1//底层数据操作版本
+
+#define DATA_FROM_XML 1
+#define DATA_FROM_MYSQL 2
+
+#define ERROR_OK 0
+#define ERROR_ID_EXIST -1
+#define ERROR_OPEN_FILE -2
+#define ERROR_UNKNOW_ERROR -100
+
+#define GETMAINWND 	((CMainDlg*)(AfxGetApp()->GetMainWnd()))
 #define PATHSPLIT 					_T('\\')		//单个字符
 #define PATHSPLITSTRING				_T("\\")		//字符串
 #define PATHSPLIT_OTHER				_T('/')			//单个字符
@@ -20,19 +31,6 @@ using namespace std;
 #define FIELD_BUSY_COLOR RGB(255,0,0)
 #define FIELD_IDLE_COLOR RGB(0,255,0)
 
-typedef struct _tagOneTimeInfo
-{
-	CString m_strVipID;
-	BOOL m_bBusy;
-	int m_nTimeIndex;
-}OneTimeInfo;
-
-typedef struct _tagOneFieldInfo
-{
-	CString m_strFieldID;
-	vector<OneTimeInfo> m_ayTimeInfo;
-
-}OneFieldInfo;
 
 typedef struct _tagVipInfo
 {
@@ -43,14 +41,6 @@ typedef struct _tagVipInfo
 	CString m_strMoney;
 
 }VipInfo;
-
-typedef struct _tagFoodInfo
-{
-	CString m_strID;
-	CString m_strName;
-	CString m_strPrice;
-
-}FoodInfo;
 
 CString TL_GetModulePath(HANDLE hModule);
 

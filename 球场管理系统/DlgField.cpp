@@ -56,19 +56,26 @@ END_MESSAGE_MAP()
 
 BOOL CDlgField::OnInitDialog()
 {
+	m_nTimeCount = 17;
+	if (DATA_FROM_TYPE == DATA_FROM_XML)
+	{
+		m_pFieldData = new CFieldDataXML(TL_GetModulePath(NULL) + "field.xml", m_nTimeCount);
+	}
+	else
+	{
+		m_pFieldData = NULL;
+		ASSERT(FALSE && "数据来源不支持！");
+		return FALSE;
+	}
+
 	GetDlgItem(IDC_BTN_DEL)->EnableWindow(FALSE);
-	m_strXML = TL_GetModulePath(NULL) + "field.xml";
+	
 	CDialog::OnInitDialog();
 	m_listField.SetExtendedStyle(LVS_EX_GRIDLINES/*|LVS_EX_FULLROWSELECT*/);  
 
-// 	for (int i = 1; i < 15; ++i)
-// 	{
-// 		m_listField.SetColumnWidth(i, 14);
-// 	}
-
 	int k=0;
 	m_listField.InsertColumn(k++, _T("球场"),	LVCFMT_CENTER, 60);
-	m_nTimeCount = 17;
+	
 	m_ayTimeByIndex.RemoveAll();
 	int hour = 8;
 	for (int i = 0; i < m_nTimeCount; i++)
@@ -86,27 +93,7 @@ BOOL CDlgField::OnInitDialog()
 		
 		m_listField.InsertColumn(k++, strTmp,	LVCFMT_CENTER, 36);
 		m_ayTimeByIndex.Add(strTmp);
-
-		//CRect rect;
-		//GetDlgItem(IDC_LIST_FIELD)->GetWindowRect(&rect);
-		//rect.top -= 20;
-		//rect.left += i * 60;
-		//rect.right += i*60;
-
-		//CDC*pDC = GetDC();
-		//pDC->DrawText("hello\nworld", &rect, 0);
-
-
 	}
-	//for (int i = 0; i < 10; ++i)
-	//{
-	//	CRect rect;
-	//	CDC*pDC = GetDC();
-	//	m_listField.GetSubItemRect(0,i,LVIR_BOUNDS,rect);
-	//	rect.top -= 10;
-	//	rect.bottom -= 10;
-	//	pDC->DrawText("hello\nworld", &rect, 0);
-	//}
 
 	m_listField.SetRowHeight(36);
 	ShowItemField(GetDate());
@@ -135,90 +122,34 @@ void CDlgField::SetPreBtnStatus()
 
 void CDlgField::ShowItemField(CString strDate)
 {
-	TiXmlDocument myDocument(m_strXML.GetBuffer()); 
-	if (!myDocument.LoadFile())
-	{
-		return;
-	}
-
 	//内存只保留当天数据
 	m_listField.DeleteAllItems();
 	m_ayFieldInfo.RemoveAll();
 
-	//获得根元素
-	TiXmlElement *RootElement = myDocument.RootElement();
-	//获得第一个vip节点。
-	TiXmlElement *field = RootElement->FirstChildElement();
+	CMainDlg* pMainWnd = GETMAINWND;
 
-	int i = 0;//行
+	//读出所有数据
+	pMainWnd->m_pageField.m_pFieldData->SetCurrentDate(strDate);
+	pMainWnd->m_pageField.m_pFieldData->GetAllData(m_ayFieldInfo);
 
-	OneTimeInfo tmInfo;
-
-	while(field)
+	int nFieldCount = m_ayFieldInfo.GetCount();
+	for (int row = 0; row < nFieldCount; row++)
 	{
-		OneFieldInfo info_insert;
-		CString strID = field->Attribute("id");
-
-		m_listField.InsertItem(i, strID);
-		info_insert.m_strFieldID = strID;//添加一个field
-		m_ayFieldInfo.Add(info_insert);//添加field，只要field存在就要添加，如果没有今天的数据vector<OneTimeInfo> m_ayTimeInfo == 0
-
-		OneFieldInfo& info = m_ayFieldInfo.GetAt(m_ayFieldInfo.GetSize() - 1);
-
-
-		//查找日期
-		TiXmlElement *DateElement = field->FirstChildElement("date");
-		while (DateElement != NULL && DateElement->Attribute("date") != strDate)
+		m_listField.InsertItem(row, m_ayFieldInfo[row].m_strFieldID);
+		int nTimeCount = m_ayFieldInfo[row].m_ayTimeInfo.size();
+		for (int col = 0; col < nTimeCount; col++)
 		{
-			DateElement = DateElement->NextSiblingElement("date");
-		}
-
-		if (DateElement == NULL)
-		{
-			//没读到日期的数据
-			field = field->NextSiblingElement("field");
-			i++;
-			continue;
-		}
-		//找到了日期
-
-		TiXmlElement *TimeElement = DateElement->FirstChildElement("time");
-
-		while (TimeElement)
-		{
-			BOOL bIsBusy = atoi(TimeElement->FirstChild()->Value());
-
-			if (bIsBusy)
+			OneTimeInfo& one = m_ayFieldInfo[row].m_ayTimeInfo[col];
+			if (one.m_bBusy)
 			{
-				tmInfo.m_strVipID = TimeElement->Attribute("booker");
+				m_listField.SetItemText(row, one.m_nTimeIndex + 1, FIELD_BUSY);
 			}
 			else
 			{
-				TimeElement->SetAttribute("booker", "");
+				m_listField.SetItemText(row, one.m_nTimeIndex + 1, FIELD_IDLE);
 			}
-
-			tmInfo.m_bBusy = bIsBusy;
-			int nIndex = atoi(TimeElement->Attribute("index"));
-			tmInfo.m_nTimeIndex = nIndex;
-
-			if (bIsBusy)
-			{
-				m_listField.SetItemText(i, nIndex+1, FIELD_BUSY);
-			}
-			else
-			{
-				m_listField.SetItemText(i, nIndex+1, FIELD_IDLE);
-			}
-			TimeElement = TimeElement->NextSiblingElement("time");
-			info.m_ayTimeInfo.push_back(tmInfo);//这里添加的顺序是xml中书写顺序，所以timeindex和vector中的下标不一样。
-
 		}
-		i++;
-		field = field->NextSiblingElement("field");
-
-	} 
-
-	myDocument.SaveFile();
+	}
 
 	if (m_listField.GetItemCount() == 0)
 	{
@@ -320,14 +251,10 @@ void CDlgField::OnNMRClickListField(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		menu.LoadMenu(IDR_MENU_BUSY);
 	}
-	else/* if (IS_FIELD_IDLE(str))*/
+	else
 	{
 		menu.LoadMenu(IDR_MENU_IDLE);
 	}
-	//else
-	//{
-	//	return;
-	//}
 
 	//获取第一个弹出菜单，所以第一个菜单必须有子菜单
 	pSubMenu = menu.GetSubMenu(0);
@@ -345,7 +272,7 @@ void CDlgField::OnBook()
 	// TODO: 在此添加命令处理程序代码
 	CDlgBook dlg;
 	int nTimeIndex = m_curSelectCol - 1;
-	dlg.m_strBookTime = m_ayTimeByIndex[m_curSelectCol - 1];
+	dlg.m_strBookTime = m_ayTimeByIndex[nTimeIndex];
 	dlg.m_strFieldID = m_ayFieldInfo[m_curSelectRow].m_strFieldID;
 	dlg.m_strXML = m_strXML;
 
@@ -395,7 +322,7 @@ void CDlgField::OnBook()
 		}
 		
 	}
-	dlg.m_nTimeIndex++;
+	//dlg.m_nTimeIndex++;
 	dlg.DoModal();
 	if (dlg.m_bSuccess)
 	{
@@ -576,50 +503,10 @@ void CDlgField::OnBnClickedBtnDel()
 	iPos		    	= m_listField.GetNextSelectedItem(pos);
 	CString strID		= m_listField.GetItemText(iPos, 0);
 
-	TiXmlDocument myDocument(m_strXML.GetBuffer());
-	if (!myDocument.LoadFile())
-	{
-		return;
-	}
-
-	//获得根元素
-	TiXmlElement *RootElement = myDocument.RootElement();
-	//获得第一个field节点。
-	TiXmlElement *field = RootElement->FirstChildElement();
-
-	int i=0;
-	while(field)
-	{
-		CString strIDFind = field->Attribute("id");
-		if (strIDFind == strID)
-		{
-			//找到了
-			break;
-		}
-
-		field = field->NextSiblingElement("field");
-	} 
-	if (field)
-	{
-		//找到了
-		TiXmlNode *pParNode =  field->Parent();
-		if (NULL==pParNode)
-		{
-			return;
-		}
-
-		TiXmlElement* pParentEle = pParNode->ToElement();
-		if (NULL!=pParentEle)
-		{
-			if(pParentEle->RemoveChild(field))
-			{
-				myDocument.SaveFile();
-				m_listField.DeleteAllItems();
-				ShowItemField(GetDate());
-			}
-		}
-	}
+	CMainDlg* pMainWnd = GETMAINWND;
+	pMainWnd->m_pageField.m_pFieldData->DeleteField(strID);
 }
+
 
 OneTimeInfo* CDlgField::GetFieldInfo(CString strFieldID, int nTimeIndex)
 {
@@ -654,139 +541,43 @@ OneTimeInfo* CDlgField::GetFieldInfo(CString strFieldID, int nTimeIndex)
 int CDlgField::AddFieldDay(CString strFieldID)
 {
 	UpdateData(TRUE);
-	TiXmlDocument myDocument(m_strXML.GetBuffer());
-	//打不开文件就新建一个空文件
-	if (!myDocument.LoadFile())
-	{
-		//CreateFoodXML();//还没实现
-		return -1;
-	}
 
-	//获得根元素
-	TiXmlElement *RootElement = myDocument.RootElement();
-	//获得第一个节点。
-	TiXmlElement *field = RootElement->FirstChildElement();
+	CMainDlg* pMainWnd = GETMAINWND;
+	pMainWnd->m_pageField.m_pFieldData->SetCurrentDate(GetDate());
+	pMainWnd->m_pageField.m_pFieldData->AddFieldDay(strFieldID);
 
-	int i=0;
-
-	while(field)
-	{
-		CString strID = field->Attribute("id");
-		if (strID == strFieldID)
-		{
-			break;
-		}
-		field = field->NextSiblingElement("field");
-	}
-
-	ASSERT(field);//应该能找到才对
-	TiXmlElement *FieldElement = field;
-	if (field == NULL)
-	{
-		//添加一个新节点
-		FieldElement = new TiXmlElement("field");
-		RootElement->LinkEndChild(FieldElement);
-		//设置Person元素的属性。
-		FieldElement->SetAttribute("id", strFieldID.GetBuffer());
-	}
-
-	//添加日期
-	TiXmlElement *DateElement = new TiXmlElement("date");
-	FieldElement->LinkEndChild(DateElement);
-
-	CWnd* p = AfxGetApp()->GetMainWnd();
-	CMainDlg* pMainWnd = (CMainDlg*)p;
-
-	DateElement->SetAttribute("date", GetDate().GetBuffer());
-
-
-	int nTimeCount = pMainWnd->m_pageField.m_nTimeCount;
-	for (int i = 0; i < nTimeCount; i++)
-	{
-		TiXmlElement *TimeElement = new TiXmlElement("time");
-
-		CString strIndex;
-		strIndex.Format("%d", i);
-		TimeElement->SetAttribute("index", strIndex.GetBuffer());
-		TimeElement->SetAttribute("booker", "");
-		DateElement->LinkEndChild(TimeElement);
-
-		TiXmlText *TimeContent = new TiXmlText("0");
-		TimeElement->LinkEndChild(TimeContent);
-	}
-
-	myDocument.SaveFile();
-
-	ShowItemField(GetDate());
+	UpdateFieldData();
 
 	return 0;
 }
 
+void CDlgField::UpdateFieldData()
+{
+	CMainDlg* pMainWnd = GETMAINWND;
+	//读出所有数据
+	m_ayFieldInfo.RemoveAll();
+	pMainWnd->m_pageField.m_pFieldData->SetCurrentDate(GetDate());
+	pMainWnd->m_pageField.m_pFieldData->GetAllData(m_ayFieldInfo);
+}
+
 int CDlgField::ChangeFieldInfo(CString strFieldID, OneTimeInfo& info)
 {
+	CMainDlg* pMainWnd = GETMAINWND;
 	//修改信息，并且更新xml文件
 	OneTimeInfo * pInfo = GetFieldInfo(strFieldID, info.m_nTimeIndex);
 	if (!pInfo)
 	{
 		//如果field没有现在日期的数据，就会为空，那么添加这天
-		AddFieldDay(strFieldID);
+		pMainWnd->m_pageField.m_pFieldData->SetCurrentDate(GetDate());
+		pMainWnd->m_pageField.m_pFieldData->AddFieldDay(strFieldID);
+		UpdateFieldData();
 		pInfo = GetFieldInfo(strFieldID, info.m_nTimeIndex);
 	}
 
 	*pInfo = info;//改内存中的值
 
-	//改文件
-
-	//创建一个XML的文档对象。
-	TiXmlDocument myDocument(m_strXML.GetBuffer());
-	if (!myDocument.LoadFile())
-	{
-		return -1;
-	}
-
-	//获得根元素
-	TiXmlElement *RootElement = myDocument.RootElement();
-	//获得第一个vip节点。
-	TiXmlElement *field = RootElement->FirstChildElement();
-
-	int i=0;
-	while(field)
-	{
-		CString strID = field->Attribute("id");
-		if (strID == strFieldID)
-		{
-			break;
-		}
-		field = field->NextSiblingElement("field");
-	} 
-
-	ASSERT(field);
-
-
-	//查找日期
-	CString strDate = GetDate();
-	TiXmlElement *DateElement = field->FirstChildElement("date");
-	while (DateElement != NULL && DateElement->Attribute("date") != strDate)
-	{
-		DateElement = DateElement->NextSiblingElement("date");
-	}
-
-	ASSERT(DateElement);
-	//找到了，更新数据
-	TiXmlElement *TimeElement = DateElement->FirstChildElement("time");
-	while(atoi(TimeElement->Attribute("index")) != info.m_nTimeIndex)
-	{
-		TimeElement = TimeElement->NextSiblingElement("time");
-	}
-	CString strBusy = "0";
-	if (info.m_bBusy)
-	{
-		strBusy = "1";
-		TimeElement->SetAttribute("booker", info.m_strVipID);
-	}
-	TimeElement->FirstChild()->SetValue(strBusy);
 	
-	myDocument.SaveFile();
+	pMainWnd->m_pageField.m_pFieldData->ChangeFieldInfo(strFieldID, info);
 	return 0;
 
 }

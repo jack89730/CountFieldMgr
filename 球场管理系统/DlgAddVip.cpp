@@ -58,8 +58,6 @@ void CDlgAddVip::OnBnClickedOk()
 
 	UpdateData(TRUE);
 
-	//TODO: 每种类型可以添加详细的限制
-
 	if (m_strID.IsEmpty())
 	{
 		MessageBox("ID不能为空！", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
@@ -137,6 +135,7 @@ void CDlgAddVip::OnBnClickedOk()
 	TiXmlText *SexContent = new TiXmlText(m_strSex.GetBuffer());
 	TiXmlText *PhoneContent = new TiXmlText(m_strPhone.GetBuffer());
 	TiXmlText *MoneyContent = new TiXmlText(m_strMoney.GetBuffer());
+
 	NameElement->LinkEndChild(NameContent);
 	SexElement->LinkEndChild(SexContent);
 	PhoneElement->LinkEndChild(PhoneContent);

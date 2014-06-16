@@ -11,6 +11,7 @@
 #include <iostream>
 #include "MainDlg.h"
 #include "DlgCheckOut.h"
+#include "fooddata.h"
 
 // CDlgFood 对话框
 
@@ -41,7 +42,6 @@ BEGIN_MESSAGE_MAP(CDlgFood, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, &CDlgFood::OnBnClickedBtnAdd)
 	ON_BN_CLICKED(IDC_BTN_DEL, &CDlgFood::OnBnClickedBtnDel)
 	ON_BN_CLICKED(IDC_BTN_MODIFY, &CDlgFood::OnBnClickedBtnModify)
-	ON_BN_CLICKED(IDC_BTN_BUY, &CDlgFood::OnBnClickedBtnBuy)
 	ON_BN_CLICKED(IDC_BUTTON1, &CDlgFood::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CDlgFood::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, &CDlgFood::OnBnClickedButton3)
@@ -56,7 +56,6 @@ void CDlgFood::OnBnClickedBtnAdd()
 	// TODO: 在此添加控件通知处理程序代码
 	CDlgAddFood dlg;
 	dlg.m_strID.Format("%d", ++m_nMaxID);
-	dlg.m_strXML = m_strXML;
 	dlg.DoModal();
 	// TODO: 在此添加控件通知处理程序代码
 	if (dlg.IsSuccess())
@@ -80,50 +79,9 @@ void CDlgFood::OnBnClickedBtnDel()
 	iPos		    	= m_listFood.GetNextSelectedItem(pos);
 	CString strID		= m_listFood.GetItemText(iPos, 0);
 
-	TiXmlDocument myDocument(m_strXML.GetBuffer());
-	if (!myDocument.LoadFile())
-	{
-		return;
-	}
-
-	//获得根元素
-	TiXmlElement *RootElement = myDocument.RootElement();
-	//获得第一个food节点。
-	TiXmlElement *food = RootElement->FirstChildElement();
-
-	int i=0;
-	while(food)
-	{
-		CString strIDFind = food->Attribute("id");
-		if (strIDFind == strID)
-		{
-			//找到了
-			break;
-		}
-
-		food = food->NextSiblingElement("food");
-
-	} 
-	if (food)
-	{
-		//找到了
-		TiXmlNode *pParNode =  food->Parent();
-		if (NULL==pParNode)
-		{
-			return;
-		}
-
-		TiXmlElement* pParentEle = pParNode->ToElement();
-		if (NULL!=pParentEle)
-		{
-			if(pParentEle->RemoveChild(food))
-			{
-				myDocument.SaveFile();
-				m_listFood.DeleteAllItems();
-				ShowItemFood();
-			}
-		}
-	}
+	CMainDlg* pMainWnd = GETMAINWND;
+	int ret = pMainWnd->m_pageFood.m_pFoodData->DeleteFood(strID);
+	ShowItemFood();
 }
 
 void CDlgFood::OnBnClickedBtnModify()
@@ -143,7 +101,6 @@ void CDlgFood::OnBnClickedBtnModify()
 	dlg.m_strID		= m_listFood.GetItemText(iPos, 0);
 	dlg.m_strName		= m_listFood.GetItemText(iPos, 1);
 	dlg.m_strPrice = m_listFood.GetItemText(iPos, 2);
-	dlg.m_strXML = m_strXML;
 
 	dlg.DoModal();
 
@@ -153,80 +110,29 @@ void CDlgFood::OnBnClickedBtnModify()
 
 void CDlgFood::ShowItemFood()
 {
-	do 
+	//内存只保留当天数据
+	m_listFood.DeleteAllItems();
+	m_ayFood.RemoveAll();
+
+	CMainDlg* pMainWnd = GETMAINWND;
+
+	//读出所有数据
+	m_pFoodData->GetAllData(m_ayFood);
+
+	m_nMaxID = 0;
+
+	int nFoodCount = m_ayFood.GetCount();
+	for (int i = 0; i < nFoodCount; i++)
 	{
-		TiXmlDocument *myDocument = new TiXmlDocument(m_strXML.GetBuffer());
-		if (!myDocument->LoadFile())
+		int nID = atoi(m_ayFood[i].m_strID);
+		if (nID > m_nMaxID)
 		{
-			break;
+			m_nMaxID = nID;
 		}
-
-		m_listFood.DeleteAllItems();
-		m_ayFood.RemoveAll();
-
-		//获得根元素
-		TiXmlElement *RootElement = myDocument->RootElement();
-		//获得第一个vip节点。
-		TiXmlElement *food = RootElement->FirstChildElement();
-
-		int i=0;
-		while(food)
-		{
-			CString strID = food->Attribute("id");
-			int nID = atoi(strID);
-
-			if (nID > m_nMaxID)
-			{
-				m_nMaxID = nID;
-			}
-
-			TiXmlElement *NameElement = food->FirstChildElement("name");
-			TiXmlElement *PriceElement = NameElement->NextSiblingElement("price");
-
-			CString strName = NameElement->FirstChild()->Value();
-			CString strPrice = PriceElement->FirstChild()->Value();
-
-			FoodInfo info;
-			int j = 0;
-			m_listFood.InsertItem(i, strID);
-			m_listFood.SetItemText(i, ++j, strName);
-			m_listFood.SetItemText(i, ++j, strPrice);
-
-			info.m_strID = strID;
-			info.m_strPrice = strPrice;
-
-			m_ayFood.Add(info);
-			i++;
-			food = food->NextSiblingElement("food");
-
-		} 
-		if (!food)
-		{
-			delete myDocument;
-			break;
-		}
-
-	} while (1);
-
-	if (m_listFood.GetItemCount() == 0)
-	{
-		GetDlgItem(IDC_BTN_DEL)->EnableWindow(FALSE);
-		GetDlgItem(IDC_BTN_MODIFY)->EnableWindow(FALSE);
-	}
-	else
-	{
-		GetDlgItem(IDC_BTN_DEL)->EnableWindow(TRUE);
-		GetDlgItem(IDC_BTN_MODIFY)->EnableWindow(TRUE);
-		m_listFood.SetSelectionMark(0);
-	}
-
-	if (m_listFood.GetItemCount() == 0)
-	{
-		GetDlgItem(IDC_BUTTON1)->EnableWindow(FALSE);
-	}
-	else
-	{
-		GetDlgItem(IDC_BUTTON1)->EnableWindow(TRUE);
+		int j = 0;
+		m_listFood.InsertItem(i, m_ayFood[i].m_strID);
+		m_listFood.SetItemText(i, ++j, m_ayFood[i].m_strName);
+		m_listFood.SetItemText(i, ++j, m_ayFood[i].m_strPrice);
 	}
 
 	UpdateData(FALSE);
@@ -234,10 +140,19 @@ void CDlgFood::ShowItemFood()
 
 BOOL CDlgFood::OnInitDialog()
 {
+	if (DATA_FROM_TYPE == DATA_FROM_XML)
+	{
+		m_pFoodData = new CFoodDataXML(TL_GetModulePath(NULL) + "food.xml");
+	}
+	else
+	{
+		m_pFoodData = NULL;
+		ASSERT(FALSE && "数据来源不支持！");
+		return FALSE;
+	}
+
 	m_nMaxID = 0;
-	m_strXML = TL_GetModulePath(NULL) + "food.xml";
 	CDialog::OnInitDialog();
-	// TODO: Add extra initialization here
 	m_listFood.SetExtendedStyle(LVS_EX_GRIDLINES|LVS_EX_FULLROWSELECT);   
 	m_listBuy.SetExtendedStyle(LVS_EX_GRIDLINES|LVS_EX_FULLROWSELECT);   
 	int k=0;
@@ -259,14 +174,6 @@ BOOL CDlgFood::OnInitDialog()
 		GetDlgItem(IDC_BUTTON1)->EnableWindow(FALSE);
 	}
 	return TRUE;
-}
-
-void CDlgFood::OnBnClickedBtnBuy()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	CDlgBuyFood dlg;
-	dlg.DoModal();
-
 }
 
 FoodInfo* CDlgFood::GetFoodInfo(CString strID)
@@ -301,42 +208,7 @@ int CDlgFood::ChangeFoodInfo(FoodInfo& info)
 	}
 	*pInfo = info;//改内存中的值
 
-	//改文件
-
-	//创建一个XML的文档对象。
-	TiXmlDocument myDocument(m_strXML.GetBuffer());
-	if (!myDocument.LoadFile())
-	{
-		return -1;
-	}
-
-	//获得根元素
-	TiXmlElement *RootElement = myDocument.RootElement();
-	//获得第一个vip节点。
-	TiXmlElement *food = RootElement->FirstChildElement();
-
-	int i=0;
-	while(food)
-	{
-		CString strID = food->Attribute("id");
-		if (strID == info.m_strID)
-		{
-			break;
-		}
-		food = food->NextSiblingElement("vip");
-	} 
-
-	if (food)
-	{
-		//找到了，更新数据
-		TiXmlElement *NameElement = food->FirstChildElement("name");
-		TiXmlElement *PriceElement = NameElement->NextSiblingElement("price");
-
-		NameElement->FirstChild()->SetValue(info.m_strName);
-		PriceElement->FirstChild()->SetValue(info.m_strPrice);
-
-		myDocument.SaveFile();
-	}
+	m_pFoodData->ChangeFoodInfo(info);
 	return 0;
 }
 void CDlgFood::OnBnClickedButton1()

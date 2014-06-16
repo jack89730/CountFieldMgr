@@ -49,7 +49,7 @@ BOOL CDlgVip::OnInitDialog()
 	m_nMaxID = 0;
 
 	CDialog::OnInitDialog();
-	// TODO: Add extra initialization here
+
 	m_listVip.SetExtendedStyle(LVS_EX_GRIDLINES|LVS_EX_FULLROWSELECT);   
 	int k=0;
 	m_listVip.InsertColumn(k++, _T("ID"),	LVCFMT_CENTER, 100);
@@ -59,6 +59,7 @@ BOOL CDlgVip::OnInitDialog()
 	m_listVip.InsertColumn(k++, _T("”‡∂Ó"),	LVCFMT_CENTER, 80);
 
 	ShowItemVip();
+
 	return TRUE;
 }
 void CDlgVip::OnBnClickedBtnAdd()

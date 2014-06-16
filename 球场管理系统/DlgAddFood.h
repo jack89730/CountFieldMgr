@@ -27,7 +27,5 @@ public:
 	BOOL IsSuccess(){return m_bIsSuccess;};
 	afx_msg void OnBnClickedCommand1();
 	CString m_strID;
-	CString m_strXML;
-	void CreateFoodXML();
 
 };

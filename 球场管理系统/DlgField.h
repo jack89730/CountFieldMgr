@@ -4,6 +4,7 @@
 #include "public.h"
 #include "CFieldList.h"
 #include "afxwin.h"
+#include "fielddata.h"
 // CDlgField ¶Ô»°¿ò
 
 class CDlgField : public CDialog
@@ -53,5 +54,8 @@ public:
 	afx_msg void OnBnClickedButton1();
 	int AddFieldDay(CString strFieldID);
 	void SetPreBtnStatus();
+	CFieldData* m_pFieldData;
+	void UpdateFieldData();
+
 };
 

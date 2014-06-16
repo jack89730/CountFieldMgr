@@ -28,6 +28,5 @@ public:
 	BOOL IsSuccess(){return m_bIsSuccess;};
 	afx_msg void OnBnClickedOk();
 
-	CString m_strXML;
 	CString m_strPrice;
 };

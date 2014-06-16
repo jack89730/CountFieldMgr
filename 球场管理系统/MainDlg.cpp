@@ -46,8 +46,6 @@ END_MESSAGE_MAP()
 // CMainDlg 对话框
 
 
-
-
 CMainDlg::CMainDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CMainDlg::IDD, pParent)
 {
@@ -138,6 +136,26 @@ BOOL CMainDlg::OnInitDialog()
 	m_CurSelTab = 0;
 
 	SetTimer(1, 1000, NULL);
+
+	CString sDate;
+	CTime Today=CTime::GetCurrentTime();
+	sDate=Today.Format("%Y年%m月%d日");
+	int week=Today.GetDayOfWeek();//获取星期几，1为星期天，7为星期六
+	switch(week)
+	{
+	case 1:{sDate=sDate+"  星期日";break;}
+	case 2:{sDate=sDate+"  星期一";break;}
+	case 3:{sDate=sDate+"  星期二";break;}
+	case 4:{sDate=sDate+"  星期三";break;}
+	case 5:{sDate=sDate+"  星期四";break;}
+	case 6:{sDate=sDate+"  星期五";break;}
+	case 7:{sDate=sDate+"  星期六";break;}
+	} 
+	CTime tm = CTime::GetCurrentTime();
+	CString str = tm.Format("%H:%M:%S");
+
+	SetDlgItemText(IDC_TIME,sDate); 
+	SetDlgItemText(IDC_WEEK,str);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
