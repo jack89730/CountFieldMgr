@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "app.h"
 #include "MainDlg.h"
+#include "DlgLogin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -58,9 +59,28 @@ BOOL CMainApp::InitInstance()
 	// TODO: 应适当修改该字符串，
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
+	strDeadDate = END_DATE;
+	CTime nowTime(time(NULL));
+	CString strDate;
+	strDate.Format("%04d%02d%02d", nowTime.GetYear(), nowTime.GetMonth(), nowTime.GetDay());
+	if (strDate > strDeadDate)
+	{
+		AfxMessageBox("软件已过期，不能使用！");
+		return FALSE;
+	}
+	CDlgLogin login;
+	login.DoModal();
+	if (!login.m_bSuccess)
+	{
+		return FALSE;
+	}
 
 	CMainDlg dlg;
 	m_pMainWnd = &dlg;
+
+	m_strUserName = login.m_strUserName;
+	m_strUserLevel = login.m_strLevel;
+
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
 	{

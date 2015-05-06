@@ -1,6 +1,7 @@
 #pragma once
 #include "resource.h"
-
+#include "afxwin.h"
+#include "leveldata.h"
 // CDlgAddVip ¶Ô»°¿ò
 
 class CDlgAddVip : public CDialog
@@ -28,6 +29,8 @@ public:
 	BOOL m_bIsSuccess;
 	BOOL IsSuccess(){return m_bIsSuccess;};
 	CString m_strID;
-	CString m_strXML;
 	void CreateVipXML();
+	CComboBox m_comboLevel;
+	CComboBox m_comboSex;
+	PRICE_LIST m_ayPriceList;
 };

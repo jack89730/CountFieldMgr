@@ -21,8 +21,13 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	CString m_strOldRemain;
+	CString m_strOldPrice;
+	CString m_strOldName;
+
+
+	CString m_strRemain;
 	CString m_strName;
-	int m_nPrice;
 	CString m_strID;
 	BOOL m_bIsSuccess;
 	BOOL IsSuccess(){return m_bIsSuccess;};

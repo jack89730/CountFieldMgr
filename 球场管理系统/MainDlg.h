@@ -8,6 +8,7 @@
 #include "DlgField.h"
 #include "DlgFood.h"
 #include "DlgVip.h"
+#include "DlgMgr.h"
 
 // CMainDlg 对话框
 class CMainDlg : public CDialog
@@ -22,7 +23,6 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
 
-
 // 实现
 protected:
 	HICON m_hIcon;
@@ -32,7 +32,8 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	DECLARE_MESSAGE_MAP()
 public:
 	CTabCtrl m_tab;
@@ -40,6 +41,8 @@ public:
 	CDlgField m_pageField; 
 	CDlgFood m_pageFood; 
 	CDlgVip m_pageVip; 
-	CDialog* m_pDialog[3];  //用来保存对话框对象指针
+	CDlgMgr m_pageMgr;
+	CDialog* m_pDialog[4];  //用来保存对话框对象指针
 	afx_msg void OnTcnSelchangeTabMain(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnClose();
 };

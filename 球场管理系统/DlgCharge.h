@@ -29,4 +29,5 @@ public:
 	BOOL m_bIsSuccess;
 	BOOL IsSuccess(){return m_bIsSuccess;};
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedCancel();
 };

@@ -1,0 +1,11 @@
+1.需要安装mysql 下载地址为 http://dlsw.baidu.com/sw-search-sp/soft/ea/12585/mysql_installer_community_V5.6.21.1_setup.1418020972.msi
+安装mysql时root的密码是123456
+可以通过Debug目录下的database.cfg 文本文件配置数据库信息
+
+2.先运行数据库配置器新建数据库，并进行测试，显示成功即代表配置成功
+
+3.运行球场管理系统即可,默认用户名:admin 密码:admin  
+
+注：可以在 数据库配置器/sql.h中修改默认用户名密码  
+//修改这个sql语句可以修改默认的超级管理员账号
+#define INSERT_ADMIN "insert into user values(null, \"admin\", \"admin\", 1)"

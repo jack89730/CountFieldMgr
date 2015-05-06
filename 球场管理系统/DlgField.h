@@ -5,6 +5,7 @@
 #include "CFieldList.h"
 #include "afxwin.h"
 #include "fielddata.h"
+#include "perioddata.h"
 // CDlgField 对话框
 
 class CDlgField : public CDialog
@@ -24,20 +25,24 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	//CListCtrl m_listField;//球场列表 //内存只保留当天数据
+	void resize();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	POINT		m_ptOld;
 	CFieldList m_listField;
-	void ShowItemField(CString strDate);
+	void ShowItemField(CString strDate = "");
 	CString m_strXML;
 	afx_msg void OnNMCustomdrawListField(NMHDR *pNMHDR, LRESULT *pResult);
-	int m_nTimeCount;
+	
 	afx_msg void OnNMRClickListField(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBook();
+	
+	int GetTimeIndexByTime(time_t timeIn);
 	CArray<CString> m_ayTimeByIndex;
-	//CArray<CString> m_ayField;
-	int m_curSelectCol;
-	int m_curSelectRow;
+	int m_curSelectField;
+	int m_curSelectTimeIndex;
 	afx_msg void OnBookInfo();
 	afx_msg void OnCancelBook();
-	CArray<OneFieldInfo> m_ayFieldInfo;
+	CArray<OneFieldBookInfo> m_ayFieldInfo;
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);
 	afx_msg void OnNcLButtonUp(UINT nHitTest, CPoint point);
@@ -45,17 +50,25 @@ public:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnBnClickedBtnAdd();
 	afx_msg void OnBnClickedBtnDel();
-	OneTimeInfo* GetFieldInfo(CString strFieldID, int nTimeIndex);//nTimeIndex 0开始，是数组中的下标
-	int ChangeFieldInfo(CString strFieldID, OneTimeInfo& info);
+	BOOL GetFieldInfo(CString strID, FieldInfo& out);
+	OneTimeBookInfo* GetFieldBookInfo(CString strFieldID, int nTimeIndex, BOOL bAdd = FALSE);//nTimeIndex 0开始，是数组中的下标
+	OneTimeBookInfo* GetFieldBookInfo(int nFieldIndex, int nTimeIndex, BOOL bAdd = FALSE);//nTimeIndex 0开始，是数组中的下标
+	int ChangeFieldBookInfo(CString strFieldID, OneTimeBookInfo& info);
 	COleDateTime m_date;
 	afx_msg void OnDtnDatetimechangeDatetimepicker1(NMHDR *pNMHDR, LRESULT *pResult);
 	CString GetDate();
+	BOOL IsWeekend(CString strDate);
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton1();
 	int AddFieldDay(CString strFieldID);
 	void SetPreBtnStatus();
 	CFieldData* m_pFieldData;
 	void UpdateFieldData();
-
+	void Resize();
+	void AddTimeCol();
+	void MoveX(int nID, int len);
+	afx_msg void OnBookPay();
+	CPeriodData* m_pPeriodData;
+	afx_msg void On32799();//租柜子
 };
 

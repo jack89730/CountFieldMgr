@@ -5,10 +5,16 @@
 #include "stdafx.h"
 #include "app.h"
 #include "MainDlg.h"
+#include "userdata.h"
+#include "leveldata.h"
+#include "fielddata.h"
+#include "vipdata.h"
+#include "fooddata.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
 
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
@@ -40,6 +46,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	ON_WM_TIMER()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
@@ -62,9 +69,11 @@ BEGIN_MESSAGE_MAP(CMainDlg, CDialog)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_TIMER()
+	ON_WM_SIZE()
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
 	ON_NOTIFY(TCN_SELCHANGE, ID_TAB_MAIN, &CMainDlg::OnTcnSelchangeTabMain)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -103,35 +112,45 @@ BOOL CMainDlg::OnInitDialog()
 	// TODO: 在此添加额外的初始化代码
 
 	//为Tab Control增加两个页面
-	m_tab.InsertItem(0, _T("球场"));
-	m_tab.InsertItem(1, _T("商品"));
-	m_tab.InsertItem(2, _T("会员"));
+	m_tab.InsertItem(0, _T("球场预订"));
+	m_tab.InsertItem(1, _T("商品购买"));
+	m_tab.InsertItem(2, _T("会员管理"));
+	m_tab.InsertItem(3, _T("系统管理"));
+	
+	m_tab.SetItemSize(CSize(250,25));
 
 	//创建对话框
 	m_pageField.Create(IDD_DLG_FIELD, &m_tab);
+	m_pageMgr.Create(IDD_DLG_MGR, &m_tab);
 	m_pageFood.Create(IDD_DLG_FOOD, &m_tab);
 	m_pageVip.Create(IDD_DLG_VIP, &m_tab);
-
+	
 	//设定在Tab内显示的范围
 	CRect rc;
 	m_tab.GetClientRect(rc);
-	rc.top += 20;
+	rc.top += 0;
 	rc.bottom -= 0;
 	rc.left += 0;
 	rc.right -= 0;
+	m_pageMgr.MoveWindow(&rc);
 	m_pageField.MoveWindow(&rc);
 	m_pageFood.MoveWindow(&rc);
 	m_pageVip.MoveWindow(&rc);
+	
+
 
 	//把对话框对象指针保存起来
 	m_pDialog[0] = &m_pageField;
 	m_pDialog[1] = &m_pageFood;
 	m_pDialog[2] = &m_pageVip;
+	m_pDialog[3] = &m_pageMgr;
 
 	//显示初始页面
+	m_pDialog[3]->ShowWindow(SW_HIDE);
 	m_pDialog[0]->ShowWindow(SW_SHOW);
 	m_pDialog[1]->ShowWindow(SW_HIDE);
 	m_pDialog[2]->ShowWindow(SW_HIDE);
+	
 	//保存当前选择
 	m_CurSelTab = 0;
 
@@ -157,6 +176,20 @@ BOOL CMainDlg::OnInitDialog()
 	SetDlgItemText(IDC_TIME,sDate); 
 	SetDlgItemText(IDC_WEEK,str);
 
+	CString strUser;
+	if (ISADMIN)
+	{
+		strUser.Format("超级管理员：%s", GETUSERNAME.GetBuffer());
+	}
+	else
+	{
+		strUser.Format("普通管理员：%s", GETUSERNAME.GetBuffer());
+	}
+	
+	
+
+	ShowWindow(SW_MAXIMIZE);
+	SetDlgItemText(IDC_USER, strUser.GetBuffer());
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -225,7 +258,7 @@ void CMainDlg::OnTcnSelchangeTabMain(NMHDR *pNMHDR, LRESULT *pResult)
 
 }
 
-void CMainDlg::OnTimer(UINT nIDEvent)   //显示本地时间
+void CMainDlg::OnTimer(UINT_PTR nIDEvent)   //显示本地时间
 {
 	// TODO: Add your message handler code here and/or call default
 	CString sDate;
@@ -247,5 +280,61 @@ void CMainDlg::OnTimer(UINT nIDEvent)   //显示本地时间
 
 	SetDlgItemText(IDC_TIME,sDate); 
 	SetDlgItemText(IDC_WEEK,str);
+
+	static int nLast = -1;
+
+	int nMin = tm.GetMinute();
+	if ((nMin == 0 || nMin == 30) && nLast != nMin)
+	{
+		m_pageField.ShowItemField();
+		nLast = nMin;
+	}
 	CDialog::OnTimer(nIDEvent);
+}
+
+void CMainDlg::OnSize(UINT nType, int cx, int cy) 
+{
+	CDialog::OnSize(nType, cx, cy);
+	//m_chartTest2.OnSize(cx,cy);
+	//控件（图）随着窗口的大小改变而改变
+	if(m_tab.GetSafeHwnd())
+		m_tab.MoveWindow(0,45,cx,cy);
+
+	CRect rc;
+	m_tab.GetClientRect(rc);
+	rc.top += 20;
+	rc.bottom -= 0;
+	rc.left += 0;
+	rc.right -= 0;
+	m_pageField.MoveWindow(&rc);
+	m_pageFood.MoveWindow(&rc);
+	m_pageVip.MoveWindow(&rc);
+	m_pageMgr.MoveWindow(&rc);
+
+}
+
+void CMainDlg::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	if(MessageBox("是否退出？","提示",MB_OK|MB_ICONINFORMATION|MB_TASKMODAL|MB_YESNO) == IDNO)
+		return;
+	CDialog::OnClose();
+	CVipData* pVip = GetVipData;
+	pVip->Save();
+	CFieldData* pField = GetFieldData;
+	pField->Save();
+
+	CUserData* pUser = GetUserData;
+	pUser->Save();
+
+	CFoodData* pFood = GetFoodData;
+	pFood->Save();
+
+	CPeriodData* pPeriod = GetPeriodData;
+	pPeriod->Save();
+
+	CLevelData* pPrice = GetLevelData;
+	pPrice->Save();
+
 }

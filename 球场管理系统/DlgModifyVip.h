@@ -1,7 +1,8 @@
 #pragma once
 
 #include "resource.h"
-
+#include "afxwin.h"
+#include "leveldata.h"
 // CDlgModifyVip ¶Ô»°¿ò
 
 class CDlgModifyVip : public CDialog
@@ -21,7 +22,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CString m_strXML;
 	CString m_strID;
 	CString m_strName;
 	CString m_strSex;
@@ -30,4 +30,7 @@ public:
 	BOOL m_bIsSuccess;
 	BOOL IsSuccess(){return m_bIsSuccess;};
 	afx_msg void OnBnClickedOk();
+	CComboBox m_comboLevel;
+	CComboBox m_comboSex;
+	PRICE_LIST m_ayPriceList;
 };

@@ -6,7 +6,7 @@
 #include "tinyxml.h"
 #include "public.h"
 #include "MainDlg.h"
-
+#include "operatedata.h"
 // CDlgAddField 对话框
 
 IMPLEMENT_DYNAMIC(CDlgAddField, CDialog)
@@ -56,9 +56,9 @@ void CDlgAddField::OnBnClickedOk()
 		return;
 	}
 
-	if(m_strName.GetLength() >= 5)
+	if(m_strName.GetLength() >= 50)
 	{
-		MessageBox(_T("名称要小于5个英文字符！"), _T("提示"), MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
+		MessageBox(_T("名称要小于50个英文字符！"), _T("提示"), MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
 		return;
 	}
 
@@ -68,6 +68,8 @@ void CDlgAddField::OnBnClickedOk()
 	{
 		m_bIsSuccess = TRUE;
 	}
+
+	pMainWnd->m_pageMgr.ShowFieldAndFoodCombo();
 
 	CDialog::OnOK();
 }

@@ -28,9 +28,10 @@ void CDlgModifyVip::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, m_strName);
-	DDX_Text(pDX, IDC_EDIT2, m_strSex);
 	DDX_Text(pDX, IDC_EDIT3, m_strPhone);
 	DDX_Text(pDX, IDC_EDIT4, m_strMoney);
+	DDX_Control(pDX, IDC_COMBO1, m_comboLevel);
+	DDX_Control(pDX, IDC_COMBO_SEX, m_comboSex);
 }
 
 
@@ -44,7 +45,32 @@ BOOL CDlgModifyVip::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	m_bIsSuccess = FALSE;
+	
+
+	CMainDlg* pMain = GETMAINWND;
+	VipInfo* p = pMain->m_pageVip.GetVipInfo(m_strID);
+	ASSERT(p);
+	m_strMoney = p->m_strMoney;
+	m_strName = p->m_strName;
+	m_strPhone = p->m_strPhone;
+	SetDlgItemText(IDC_COMBO_SEX, p->m_strSex);
 	UpdateData(FALSE);
+
+	CLevelData* pPrice = GetLevelData;
+	pPrice->GetAllData(m_ayPriceList);
+	int n = m_ayPriceList.GetSize();
+	int nSel = 0;
+	for (int i = 0; i < n; i++)
+	{
+		CString str;
+		str.Format("%s-%s", m_ayPriceList[i].m_strID.GetBuffer(), m_ayPriceList[i].m_strName.GetBuffer());
+		m_comboLevel.AddString(str);
+		if (m_ayPriceList[i].m_strID == p->m_strLevelID)
+		{
+			nSel = i;
+		}
+	}
+	m_comboLevel.SetCurSel(nSel);
 	return TRUE;
 }
 
@@ -59,6 +85,8 @@ void CDlgModifyVip::OnBnClickedOk()
 		MessageBox("姓名不能为空!", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
 		return;
 	}
+
+	GetDlgItemText(IDC_COMBO_SEX, m_strSex);
 
 	if(m_strSex.IsEmpty())
 	{
@@ -84,6 +112,9 @@ void CDlgModifyVip::OnBnClickedOk()
 	info.m_strName = m_strName;
 	info.m_strPhone = m_strPhone;
 	info.m_strSex = m_strSex;
+
+	int nLevel = m_comboLevel.GetCurSel();
+	info.m_strLevelID = m_ayPriceList[nLevel].m_strID;
 
 	CWnd* p = AfxGetApp()->GetMainWnd();
 	CMainDlg* pMainWnd = (CMainDlg*)p;

@@ -16,6 +16,7 @@ CDlgAddFood::CDlgAddFood(CWnd* pParent /*=NULL*/)
 	, m_strName(_T(""))
 	, m_strPrice(_T(""))
 	, m_strID(_T(""))
+	, m_strRemain(_T(""))
 {
 
 }
@@ -29,7 +30,7 @@ void CDlgAddFood::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, m_strName);
 	DDX_Text(pDX, IDC_EDIT2, m_strPrice);
-	DDX_Text(pDX, IDC_EDIT3, m_strID);
+	DDX_Text(pDX, IDC_EDIT4, m_strRemain);
 }
 
 
@@ -44,6 +45,8 @@ BOOL CDlgAddFood::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	m_bIsSuccess = FALSE;
+	m_strRemain = "0";
+	m_strPrice = "0";
 	return TRUE;
 }
 
@@ -68,14 +71,21 @@ void CDlgAddFood::OnBnClickedOk()
 		return;
 	}
 
+	if(atoi(m_strRemain.GetBuffer()) < 0)
+	{
+		MessageBox("库存不能为负数！", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
+		return;
+	}
+
 	FoodInfo info;
 	info.m_strID = m_strID;
 	info.m_strName = m_strName;
 	info.m_strPrice = m_strPrice;
+	info.m_strRemain = m_strRemain;
 
 	CMainDlg* pMainWnd = GETMAINWND;
 	int ret = pMainWnd->m_pageFood.m_pFoodData->AddFood(info);
-	if (ret == ERROR_ID_EXIST)
+	if (ret == ERROR_NAME_EXIST)
 	{
 		MessageBox("ID已存在", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
 		return;

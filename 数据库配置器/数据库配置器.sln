@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "数据库配置器", ".\数据库配置器.vcproj", "{B12CB28D-84DD-4DE7-BCED-0CC62A969180}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B12CB28D-84DD-4DE7-BCED-0CC62A969180}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B12CB28D-84DD-4DE7-BCED-0CC62A969180}.Debug|Win32.Build.0 = Debug|Win32
+		{B12CB28D-84DD-4DE7-BCED-0CC62A969180}.Release|Win32.ActiveCfg = Release|Win32
+		{B12CB28D-84DD-4DE7-BCED-0CC62A969180}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

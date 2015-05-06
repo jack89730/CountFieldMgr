@@ -5,6 +5,7 @@
 #include "DlgAddVip.h"
 #include "access.h"
 #include "tinyxml.h"
+#include "MainDlg.h"
 
 // CDlgAddVip 对话框
 
@@ -29,10 +30,10 @@ void CDlgAddVip::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, m_strName);
-	DDX_Text(pDX, IDC_EDIT2, m_strSex);
 	DDX_Text(pDX, IDC_EDIT3, m_strPhone);
 	DDX_Text(pDX, IDC_EDIT4, m_strMoney);
-	DDX_Text(pDX, IDC_EDIT_ID, m_strID);
+	DDX_Control(pDX, IDC_COMBO1, m_comboLevel);
+	DDX_Control(pDX, IDC_COMBO_SEX, m_comboSex);
 }
 
 
@@ -46,7 +47,31 @@ END_MESSAGE_MAP()
 BOOL CDlgAddVip::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	CLevelData* pPrice = GetLevelData;
+	pPrice->GetAllData(m_ayPriceList);
+	int n = m_ayPriceList.GetSize();
+	int nDelIndex = -1;
+	for (int i = 0; i < n; i++)
+	{
+		if (m_ayPriceList[i].m_strID == VIP_LEVEL_0)
+		{
+			//等级为0 只给非会员预定场地时使用，不能手动添加会员
+			nDelIndex = i;
+			continue;
+		}
+		CString str;
+		str.Format("%s-%s", m_ayPriceList[i].m_strID.GetBuffer(), m_ayPriceList[i].m_strName.GetBuffer());
+		m_comboLevel.AddString(str);
+	}
+	if (nDelIndex > -1)
+	{
+		m_ayPriceList.RemoveAt(nDelIndex);
+	}
 	m_bIsSuccess = FALSE;
+	m_comboLevel.SetCurSel(0);
+	m_comboSex.SetCurSel(0);
+	m_strMoney = "0";
+	UpdateData(FALSE);
 	return TRUE;
 }
 
@@ -69,6 +94,8 @@ void CDlgAddVip::OnBnClickedOk()
 		return;
 	}
 
+	GetDlgItemText(IDC_COMBO_SEX, m_strSex);
+
 	if(m_strSex.IsEmpty())
 	{
 		MessageBox("性别不能为空！", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
@@ -81,71 +108,46 @@ void CDlgAddVip::OnBnClickedOk()
 		return;
 	}
 
-	if(atoi(m_strMoney.GetBuffer())< 0)
+	if(m_strMoney.IsEmpty() || atoi(m_strMoney.GetBuffer())< 0)
 	{
-		MessageBox("余额不能为负数！", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
+		MessageBox("余额不能为空或负数！", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
 		return;
 	}
 	
-	TiXmlDocument myDocument(m_strXML.GetBuffer());
-	//打不开文件就新建一个空文件
-	if (!myDocument.LoadFile())
+	CMainDlg* pMainWnd = GETMAINWND;
+
+	VipInfo info;
+	info.m_strID = m_strID;
+	info.m_strName = m_strName;
+	info.m_strMoney = m_strMoney;
+	if (atoi(m_strMoney) == 0)
 	{
-		//CreateVipXML();
+		info.m_strMoney = "0";
+	}
+	info.m_strPhone = m_strPhone;
+	info.m_strSex = m_strSex;
+	int nSel = m_comboLevel.GetCurSel();
+	if (m_comboLevel.GetCount() == 0)
+	{
+		MessageBox("请添加会员等级！", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
+		return;
+	}
+	if (nSel == -1)
+	{
+		MessageBox("请选择会员等级！", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
 		return;
 	}
 
-	//获得根元素
-	TiXmlElement *RootElement = myDocument.RootElement();
-	//获得第一个vip节点。
-	TiXmlElement *vip = RootElement->FirstChildElement();
-
-	int i=0;
-
-	while(vip)
+	info.m_strLevelID = m_ayPriceList[nSel].m_strID;
+	
+	info.m_bLock = FALSE;
+	if (ERROR_OK == pMainWnd->m_pageVip.m_pVipData->AddVip(info))
 	{
-		CString strID = vip->Attribute("id");
-		if (strID == m_strID)
-		{
-			//不能有相同ID
-			MessageBox("ID已经存在", "提示", MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
-			return;
-		}
-		vip = vip->NextSiblingElement("vip");
-	} 
-
-	//添加一个新节点
-	TiXmlElement *VipElement = new TiXmlElement("vip");
-	RootElement->LinkEndChild(VipElement);
-	//设置Person元素的属性。
-	VipElement->SetAttribute("id", m_strID.GetBuffer());
-	//创建name元素、sex元素并连接。
-	TiXmlElement *NameElement = new TiXmlElement("name");
-	TiXmlElement *SexElement = new TiXmlElement("sex");
-	TiXmlElement *PhoneElement = new TiXmlElement("phone");
-	TiXmlElement *MoneyElement = new TiXmlElement("money");
-
-	VipElement->LinkEndChild(NameElement);
-	VipElement->LinkEndChild(SexElement);
-	VipElement->LinkEndChild(PhoneElement);
-	VipElement->LinkEndChild(MoneyElement);
-
-	//设置name元素和sex元素的内容并连接。
-	TiXmlText *NameContent = new TiXmlText(m_strName.GetBuffer());
-	TiXmlText *SexContent = new TiXmlText(m_strSex.GetBuffer());
-	TiXmlText *PhoneContent = new TiXmlText(m_strPhone.GetBuffer());
-	TiXmlText *MoneyContent = new TiXmlText(m_strMoney.GetBuffer());
-
-	NameElement->LinkEndChild(NameContent);
-	SexElement->LinkEndChild(SexContent);
-	PhoneElement->LinkEndChild(PhoneContent);
-	MoneyElement->LinkEndChild(MoneyContent);
-
-	myDocument.SaveFile();
+		m_bIsSuccess = TRUE;
+	}
 
 	CDialog::OnOK();
 
-	m_bIsSuccess = TRUE;
 
 }
 

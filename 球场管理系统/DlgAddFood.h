@@ -28,4 +28,5 @@ public:
 	afx_msg void OnBnClickedCommand1();
 	CString m_strID;
 
+	CString m_strRemain;
 };

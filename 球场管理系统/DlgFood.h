@@ -23,6 +23,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	POINT		m_ptOld;
+	void resize();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	CListCtrl m_listFood;
 	afx_msg void OnBnClickedBtnAdd();
 	afx_msg void OnBnClickedBtnDel();
@@ -32,6 +35,7 @@ public:
 
 	CArray<FoodInfo> m_ayFood;
 	FoodInfo* GetFoodInfo(CString strID);
+	FoodInfo* GetFoodInfoByName(CString strName);
 	int ChangeFoodInfo(FoodInfo& info);
 	//CString m_strXML;
 	int m_nMaxID;
